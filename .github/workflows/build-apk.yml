@@ -27,7 +27,7 @@ jobs:
 
       - name: Descomprimir proyecto
         run: |
-          unzip -o Bolita-proyecto-completo.zip -d proyecto
+          unzip -o Bolita-actualizado.zip -d proyecto
 
       - name: Instalar dependencias
         working-directory: proyecto
