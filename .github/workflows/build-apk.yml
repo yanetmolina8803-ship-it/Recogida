@@ -1,0 +1,52 @@
+
+name: Crear APK de Bolita
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Descomprimir proyecto
+        run: |
+          unzip -o Bolita-proyecto-completo.zip -d proyecto
+
+      - name: Instalar dependencias
+        working-directory: proyecto
+        run: npm install
+
+      - name: Crear proyecto Android
+        working-directory: proyecto
+        run: npx cap add android
+
+      - name: Sincronizar aplicación
+        working-directory: proyecto
+        run: npx cap sync android
+
+      - name: Compilar APK
+        working-directory: proyecto/android
+        run: chmod +x gradlew && ./gradlew assembleDebug
+
+      - name: Guardar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bolita-APK
+          path: proyecto/android/app/build/outputs/apk/debug/app-debug.apk
