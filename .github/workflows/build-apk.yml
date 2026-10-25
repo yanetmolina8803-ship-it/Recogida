@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4
@@ -26,26 +27,26 @@ jobs:
           node-version: "20"
 
       - name: Descomprimir proyecto
-        run: |
-          unzip -o Bolita-actualizado-final.zip -d proyecto
+        run: unzip -o Bolita-actualizado-final.zip -d proyecto
+
       - name: Instalar dependencias
-        working-directory: proyecto
+        working-directory: proyecto/bolita-upd
         run: npm install
 
       - name: Crear proyecto Android
-        working-directory: proyecto
+        working-directory: proyecto/bolita-upd
         run: npx cap add android
 
       - name: Sincronizar aplicación
-        working-directory: proyecto
+        working-directory: proyecto/bolita-upd
         run: npx cap sync android
 
       - name: Compilar APK
-        working-directory: proyecto/android
+        working-directory: proyecto/bolita-upd/android
         run: chmod +x gradlew && ./gradlew assembleDebug
 
       - name: Guardar APK
         uses: actions/upload-artifact@v4
         with:
           name: Bolita-APK
-          path: proyecto/android/app/build/outputs/apk/debug/app-debug.apk
+          path: proyecto/bolita-upd/android/app/build/outputs/apk/debug/app-debug.apk
