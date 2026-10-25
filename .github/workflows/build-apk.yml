@@ -27,8 +27,7 @@ jobs:
 
       - name: Descomprimir proyecto
         run: |
-          unzip -o Bolita-actualizado-v2.zip -d proyecto
-
+          unzip -o Bolita-actualizado-v2-descarga.zip -d proyecto
       - name: Instalar dependencias
         working-directory: proyecto
         run: npm install
