@@ -27,7 +27,7 @@ jobs:
           node-version: "20"
 
       - name: Descomprimir proyecto
-        run: unzip -o Bolita-actualizado-entregar-camara.zip -d proyecto
+        run: unzip -o Bolita-APK-fix.zip -d proyecto
 
       - name: Instalar dependencias
         working-directory: proyecto/bolita-upd
